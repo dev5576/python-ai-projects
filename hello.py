@@ -8,8 +8,10 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 #from sklearn.feature_selection import RFE
 #from sklearn.ensemble import RandomForestClassifier
 
@@ -29,15 +31,19 @@ def main():
         print("Verbose mode enabled.")
 
 
+def plot_iris():
+    data = sns.load_dataset("iris") 
+    plot = sns.FacetGrid(data, col="species") 
+    plot.map(plt.plot, "sepal_width") 
+    plt.show()
+
 def predictIrisFlower():
     iris = datasets.load_iris()
     print(iris.data.shape)
     X = iris.data
     y = iris.target
    
-    print(X)
-    print(y)
-    
+  
     #split the data into training and test sets, 80% training, 20% test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -55,8 +61,20 @@ def predictIrisFlower():
     iris_type = ['Setosa', 'Versicolour', 'Virginica']
     print(f"Prediction: {iris_type[prediction[0]]}")
 
+    plot_iris()
+    
+def detectBreastCancer():
+    breast_cancer = datasets.load_breast_cancer()
+    X = breast_cancer.data
+    y= breast_cancer.target
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = DecisionTreeClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)  
+    print(f"BreastCancer detection Accuracy: {accuracy_score(y_test, y_pred)}")
 
 
 if __name__ == "__main__":
     predictIrisFlower()
+    detectBreastCancer()
     main()
