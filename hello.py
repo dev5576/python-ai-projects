@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -39,7 +40,7 @@ def plot_iris():
 
 def predictIrisFlower():
     iris = datasets.load_iris()
-    print(iris.data.shape)
+    #print(iris.data.shape)
     X = iris.data
     y = iris.target
    
@@ -53,13 +54,13 @@ def predictIrisFlower():
 
     #predict the test set
     y_pred = model.predict(X_test)
-    print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+    print(f"Flower detection Accuracy: {accuracy_score(y_test, y_pred)}")
 
     #predict a new flower
     new_flower = [[5.1, 3.5, 1.5, 0.2]]
     prediction = model.predict(new_flower)
     iris_type = ['Setosa', 'Versicolour', 'Virginica']
-    print(f"Prediction: {iris_type[prediction[0]]}")
+    print(f"Iris Flower Prediction: {iris_type[prediction[0]]}")
 
     plot_iris()
     
@@ -67,14 +68,18 @@ def detectBreastCancer():
     breast_cancer = datasets.load_breast_cancer()
     X = breast_cancer.data
     y= breast_cancer.target
+    #print(breast_cancer.feature_names)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    model = DecisionTreeClassifier(random_state=42)
+    model = DecisionTreeClassifier()
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)  
     print(f"BreastCancer detection Accuracy: {accuracy_score(y_test, y_pred)}")
 
 
+    
+    
 if __name__ == "__main__":
-    predictIrisFlower()
     detectBreastCancer()
-    main()
+    predictIrisFlower()
+   
+    #main()
