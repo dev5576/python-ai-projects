@@ -8,6 +8,8 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+import numpy as np
 #from sklearn.feature_selection import RFE
 #from sklearn.ensemble import RandomForestClassifier
 
@@ -29,8 +31,12 @@ def main():
 
 def predictIrisFlower():
     iris = datasets.load_iris()
+    print(iris.data.shape)
     X = iris.data
     y = iris.target
+   
+    print(X)
+    print(y)
     
     #split the data into training and test sets, 80% training, 20% test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
