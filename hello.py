@@ -5,9 +5,9 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn import datasets
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, ConfusionMatrixDisplay
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
@@ -15,7 +15,9 @@ import numpy as np
 import seaborn as sns
 #from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import plot_tree
+from sklearn.tree import plot_tree, export_graphviz
+from scipy.stats import randint
+import graphlib
 
 
 
@@ -118,6 +120,10 @@ def predictDiabetes():
     #print(grid_search.best_score_)
     rf_best = grid_search.best_estimator_
     #print(rf_best)
+
+    sns.tit("Diabetes Detection")
+    sns.pairplot(df, hue='Outcome')
+    plt.show()
  
 
     
