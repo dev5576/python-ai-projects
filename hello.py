@@ -126,10 +126,16 @@ def predictDiabetes():
     plt.show()
  
 
+
+def detectMarketing():
+    print("\n")
+    bank_data = pd.read_csv('bank-direct-marketing-campaigns.csv')
+   
     
 if __name__ == "__main__":
-    detectBreastCancer()
-    predictDiabetes()
-    predictIrisFlower()
+    #detectBreastCancer()
+    #predictDiabetes()
+    #predictIrisFlower()
+    detectMarketing()
    
     #main()
