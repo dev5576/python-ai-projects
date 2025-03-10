@@ -5,9 +5,9 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn import datasets
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, ConfusionMatrixDisplay
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
@@ -15,7 +15,11 @@ import numpy as np
 import seaborn as sns
 #from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import plot_tree
+from sklearn.tree import plot_tree, export_graphviz
+from scipy.stats import randint
+import graphlib
+import graphviz
+from IPython.display import Image
 
 
 
@@ -118,12 +122,45 @@ def predictDiabetes():
     #print(grid_search.best_score_)
     rf_best = grid_search.best_estimator_
     #print(rf_best)
+
+    sns.tit("Diabetes Detection")
+    sns.pairplot(df, hue='Outcome')
+    plt.show()
  
 
+
+def detectMarketing():
+    print("\n")
+    bank_data = pd.read_csv('bank-direct-marketing-campaigns.csv')
+    bank_data['default'] = bank_data['default'].map({'no':0,'yes':1,'unknown':0})
+    bank_data['y'] = bank_data['y'].map({'no':0,'yes':1})
+
+    X = bank_data.drop('y', axis=1)
+    y = bank_data['y']
+
+    # Convert categorical string values to numeric values
+    X = pd.get_dummies(X, drop_first=True)
+
+    # Split the data into training and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    rf = RandomForestClassifier(random_state=42, n_jobs=-1, max_depth=5,
+                                       n_estimators=100, oob_score=True)
+    rf.fit(X_train, y_train)
+
+    y_pred = rf.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    print("Accuracy:", accuracy*100)
+
+
+ 
+    
     
 if __name__ == "__main__":
-    detectBreastCancer()
-    predictDiabetes()
-    predictIrisFlower()
+    #detectBreastCancer()
+    #predictDiabetes()
+    #predictIrisFlower()
+    detectMarketing()
    
     #main()
