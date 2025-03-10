@@ -18,6 +18,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import plot_tree, export_graphviz
 from scipy.stats import randint
 import graphlib
+import graphviz
+from IPython.display import Image
 
 
 
@@ -130,7 +132,30 @@ def predictDiabetes():
 def detectMarketing():
     print("\n")
     bank_data = pd.read_csv('bank-direct-marketing-campaigns.csv')
-   
+    bank_data['default'] = bank_data['default'].map({'no':0,'yes':1,'unknown':0})
+    bank_data['y'] = bank_data['y'].map({'no':0,'yes':1})
+
+    X = bank_data.drop('y', axis=1)
+    y = bank_data['y']
+
+    # Convert categorical string values to numeric values
+    X = pd.get_dummies(X, drop_first=True)
+
+    # Split the data into training and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    rf = RandomForestClassifier(random_state=42, n_jobs=-1, max_depth=5,
+                                       n_estimators=100, oob_score=True)
+    rf.fit(X_train, y_train)
+
+    y_pred = rf.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    print("Accuracy:", accuracy*100)
+
+
+ 
+    
     
 if __name__ == "__main__":
     #detectBreastCancer()
