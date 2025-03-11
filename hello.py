@@ -161,7 +161,7 @@ def detectMarketing():
     accuracy = accuracy_score(y_test, y_pred)
     print("Accuracy:", accuracy*100)
 
-
+#reference https://www.w3schools.com/python/python_ml_hierarchial_clustering.asp
 def hierarchicalCluster():
     x = [4, 5, 10, 4, 3, 11, 14 , 6, 10, 12]
     y = [21, 19, 24, 17, 16, 25, 24, 22, 21, 21]
@@ -178,6 +178,22 @@ def hierarchicalCluster():
     print(labels)
     plt.scatter(x, y, c=labels)
     plt.show()
+
+
+#reference: https://www.w3schools.com/python/python_ml_logistic_regression.asp
+def logisticRegression():
+    #X represents the size of a tumor in centimeters.
+    X = np.array([3.78, 2.44, 2.09, 0.14, 1.72, 1.65, 4.92, 4.37, 4.96, 4.52, 3.69, 5.88]).reshape(-1,1)
+
+    #Note: X has to be reshaped into a column from a row for the LogisticRegression() function to work.
+    #y represents whether or not the tumor is cancerous (0 for "No", 1 for "Yes").
+    y = np.array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1])
+
+    logr = linear_model.LogisticRegression()
+    logr.fit(X, y)
+
+    predicted = logr.predict(np.array([3.46]).reshape(-1,1))
+    print(predicted)
     
     
 if __name__ == "__main__":
@@ -186,7 +202,8 @@ if __name__ == "__main__":
     #predictIrisFlower()
     #detectMarketing()
 
-    hierarchicalCluster()
+    #hierarchicalCluster()
+    logisticRegression()
    
    
 
