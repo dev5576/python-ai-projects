@@ -17,9 +17,17 @@ import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import plot_tree, export_graphviz
 from scipy.stats import randint
+from scipy import stats
 import graphlib
 import graphviz
 from IPython.display import Image
+from sklearn.metrics import r2_score
+from sklearn import linear_model
+from sklearn.preprocessing import StandardScaler
+from sklearn import tree
+from sklearn import metrics
+from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram, linkage
 
 
 
@@ -154,13 +162,32 @@ def detectMarketing():
     print("Accuracy:", accuracy*100)
 
 
- 
+def hierarchicalCluster():
+    x = [4, 5, 10, 4, 3, 11, 14 , 6, 10, 12]
+    y = [21, 19, 24, 17, 16, 25, 24, 22, 21, 21]
+
+    data = list(zip(x, y))
+    print(data)
+
+    linkage_date = linkage(data, method='ward', metric='euclidean')
+    dendrogram(linkage_date)
+    plt.show()
+
+    hierarchical_cluster = AgglomerativeClustering(n_clusters=3, metric='euclidean', linkage='ward')
+    labels = hierarchical_cluster.fit_predict(data)
+    print(labels)
+    plt.scatter(x, y, c=labels)
+    plt.show()
     
     
 if __name__ == "__main__":
     #detectBreastCancer()
     #predictDiabetes()
     #predictIrisFlower()
-    detectMarketing()
+    #detectMarketing()
+
+    hierarchicalCluster()
    
+   
+
     #main()
